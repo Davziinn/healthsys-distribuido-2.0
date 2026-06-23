@@ -15,7 +15,9 @@ public interface UsuarioMapper {
 
     Usuario toModel (UsuarioRequestDTO dto);
 
+    Usuario toUpdateModel (UpdateUsuarioRequestDTO dto);
+
     UsuarioResponseDTO toDTO (Usuario model);
 
-    UpdateUsuarioRequestDTO toUpdateDTO (Usuario model);
+    //UpdateUsuarioRequestDTO toUpdateDTO (Usuario model);
 }

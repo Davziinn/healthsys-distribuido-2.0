@@ -10,11 +10,13 @@ public record UsuarioRequestDTO (
         @NotBlank(message = "O campo NOME é obrigatório")
         String nome,
 
+        @NotBlank(message = "O campo EMAIL é obrigatório")
         @Email(message = "O campo deve conter um EMAIL válido")
         String email,
 
         @Size(min = 8, message = "O campo SENHA deve conter no MÍNIMO 8 caracteres")
         String senha,
 
+        @NotBlank(message = "O campo ROLE é obrigatório")
         RoleUsuario role
 ) {}

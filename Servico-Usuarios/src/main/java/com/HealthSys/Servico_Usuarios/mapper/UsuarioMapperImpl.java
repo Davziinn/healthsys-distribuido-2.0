@@ -48,6 +48,16 @@ public class UsuarioMapperImpl implements UsuarioMapper {
     }
 
     @Override
+    public Usuario toUpdateModel(UpdateUsuarioRequestDTO dto) {
+        return Usuario.builder()
+                .nomeUsuario(dto.nome())
+                .emailUsuario(dto.email())
+                .roleUsuario(dto.role())
+                .ativo(dto.ativo())
+                .build();
+    }
+
+    @Override
     public UsuarioResponseDTO toDTO(Usuario model) {
         return new UsuarioResponseDTO(
                 model.getId(),
@@ -58,13 +68,13 @@ public class UsuarioMapperImpl implements UsuarioMapper {
         );
     }
 
-    @Override
-    public UpdateUsuarioRequestDTO toUpdateDTO(Usuario model) {
-        return new UpdateUsuarioRequestDTO(
-                model.getNomeUsuario(),
-                model.getEmailUsuario(),
-                model.getRoleUsuario(),
-                model.isAtivo()
-        );
-    }
+//    @Override
+//    public UpdateUsuarioRequestDTO toUpdateDTO(Usuario model) {
+//        return new UpdateUsuarioRequestDTO(
+//                model.getNomeUsuario(),
+//                model.getEmailUsuario(),
+//                model.getRoleUsuario(),
+//                model.isAtivo()
+//        );
+//    }
 }

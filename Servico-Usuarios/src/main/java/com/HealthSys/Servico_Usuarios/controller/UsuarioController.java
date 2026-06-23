@@ -42,10 +42,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateUsuarioRequestDTO> atualizarUsuario (@PathVariable Long id, @Valid @RequestBody UsuarioRequestDTO dto) {
-        Usuario usuarioAtualizado = usuarioService.editarUsuario(id, usuarioMapper.toModel(dto));
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario (@PathVariable Long id, @Valid @RequestBody UpdateUsuarioRequestDTO dto) {
+        Usuario usuarioAtualizado = usuarioService.editarUsuario(id, usuarioMapper.toUpdateModel(dto));
 
-        return ResponseEntity.ok(usuarioMapper.toUpdateDTO(usuarioAtualizado));
+        return ResponseEntity.ok(usuarioMapper.toDTO(usuarioAtualizado));
     }
 
     @DeleteMapping("/{id}")

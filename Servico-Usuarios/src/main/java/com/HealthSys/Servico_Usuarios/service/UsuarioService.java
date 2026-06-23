@@ -59,6 +59,14 @@ public class UsuarioService {
 
     @Transactional
     public void deletarUsuarioById (Long id) {
+        if (!verificaExistenciaUsuarioById(id)) {
+            throw new UsuarioNotFoundException("Usuário não existe");
+        }
+
         usuarioRepository.deleteById(id);
+    }
+
+    public boolean verificaExistenciaUsuarioById (Long id) {
+        return usuarioRepository.existsById(id);
     }
 }
