@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: Servico-Usuarios
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_usuario-healthsys
+    username: adm
+    password: adm
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      # Opcoes: update, create, create-drop, validate, none
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

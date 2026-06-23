@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: healthSys-servico-usuarios
+    environment:
+      POSTGRES_DB: db_usuario-healthsys
+      POSTGRES_USER: adm
+      POSTGRES_PASSWORD: adm
+    ports:
+      - "5432:5432"
+    volumes:
+      - healthSys_usu_data:/var/lib/postgresql/data
+
+volumes:
+  healthSys_usu_data:

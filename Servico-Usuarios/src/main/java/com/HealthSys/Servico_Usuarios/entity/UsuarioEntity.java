@@ -1,6 +1,6 @@
-package com.HealthSys.Sevico_Usuarios.entity;
+package com.HealthSys.Servico_Usuarios.entity;
 
-import com.HealthSys.Sevico_Usuarios.enums.RoleUsuario;
+import com.HealthSys.Servico_Usuarios.enums.RoleUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

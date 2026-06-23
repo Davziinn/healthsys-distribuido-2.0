@@ -1,4 +1,4 @@
-package com.HealthSys.Sevico_Usuarios.security;
+package com.HealthSys.Servico_Usuarios.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
