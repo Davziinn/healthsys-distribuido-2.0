@@ -7,6 +7,7 @@ import com.HealthSys.Servico_Usuarios.models.Usuario;
 import com.HealthSys.Servico_Usuarios.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,10 +19,14 @@ public class UsuarioService {
 
     private final UsuarioMapper usuarioMapper;
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Usuario salvarUsuario (Usuario usuario) {
-        usuario = usuario.toBuilder().ativo(true).build();
+        usuario = usuario.toBuilder()
+                .senha(passwordEncoder.encode(usuario.getSenha()))
+                .ativo(true)
+                .build();
         return usuarioMapper.toModel(usuarioRepository.save(usuarioMapper.toEntity(usuario)));
     }
 
