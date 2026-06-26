@@ -32,7 +32,7 @@ public class PacienteEntity {
     @Column(name = "CPF_PAC", nullable = false, unique = true, length = 14)
     private String cpfPaciente;
 
-    @Column(name = "DT_NASC", nullable = false, length = 10)
+    @Column(name = "DT_NASC", nullable = false)
     private LocalDate dataNascimento;
 
     @Column(name = "SX_PAC", nullable = false)
@@ -49,9 +49,9 @@ public class PacienteEntity {
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AtendimentoEntity> atendimentos;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VacinaEntity> vacinas;
 }

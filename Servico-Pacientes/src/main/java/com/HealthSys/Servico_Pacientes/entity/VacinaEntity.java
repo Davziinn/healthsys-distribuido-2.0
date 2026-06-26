@@ -38,7 +38,7 @@ public class VacinaEntity {
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PAC")
     private PacienteEntity paciente;
 

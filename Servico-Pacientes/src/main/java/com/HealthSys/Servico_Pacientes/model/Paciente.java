@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +19,8 @@ public class Paciente {
     private LocalDate dataNascimento;
     private String sexo;
     private String telefone;
+    private List<Atendimento> atendimentos;
+    private List<Vacina> vacinas;
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAtualizacao;
 }

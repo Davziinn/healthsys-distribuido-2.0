@@ -1,5 +1,6 @@
 package com.HealthSys.Servico_Pacientes.mappers;
 
+import com.HealthSys.Servico_Pacientes.dtos.atendimento.AtendimentoResponseDTO;
 import com.HealthSys.Servico_Pacientes.entity.AtendimentoEntity;
 import com.HealthSys.Servico_Pacientes.model.Atendimento;
 import org.springframework.stereotype.Component;
@@ -39,5 +40,16 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
                 .dataAtualizacao(model.getDataAtualizacao())
                 .paciente(model.getPaciente() != null ? pacienteMapper.toEntity(model.getPaciente()) : null)
                 .build();
+    }
+
+    @Override
+    public AtendimentoResponseDTO toDTO(Atendimento model) {
+        return new AtendimentoResponseDTO(
+                model.getId(),
+                model.getTipoAtendimento(),
+                model.getDataAtendimento(),
+                model.getObservacoes(),
+                model.getStatusAtendimento()
+        );
     }
 }

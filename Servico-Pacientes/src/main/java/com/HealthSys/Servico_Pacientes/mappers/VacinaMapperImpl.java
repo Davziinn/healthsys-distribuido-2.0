@@ -1,5 +1,7 @@
 package com.HealthSys.Servico_Pacientes.mappers;
 
+import com.HealthSys.Servico_Pacientes.dtos.vacina.VacinaRequestDTO;
+import com.HealthSys.Servico_Pacientes.dtos.vacina.VacinaResponseDTO;
 import com.HealthSys.Servico_Pacientes.entity.VacinaEntity;
 import com.HealthSys.Servico_Pacientes.model.Vacina;
 import org.springframework.stereotype.Component;
@@ -41,5 +43,25 @@ public class VacinaMapperImpl implements VacinaMapper {
                         model.getPaciente() != null ? pacienteMapper.toEntity(model.getPaciente()) : null
                 )
                 .build();
+    }
+
+    @Override
+    public Vacina toModel(VacinaRequestDTO dto) {
+        return Vacina.builder()
+                .nomeVacina(dto.nomeVacina())
+                .dataAplicacao(dto.dataAplicacao())
+                .loteVacina(dto.loteVacina())
+                .build();
+    }
+
+    @Override
+    public VacinaResponseDTO toDTO(Vacina model) {
+        return new VacinaResponseDTO(
+                model.getId(),
+                model.getNomeVacina(),
+                model.getDataAplicacao(),
+                model.getLoteVacina(),
+                model.getPaciente().getId()
+        );
     }
 }
