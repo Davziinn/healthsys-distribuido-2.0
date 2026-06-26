@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,7 +17,7 @@ public class Vacina {
 
     private Long id;
     private String nomeVacina;
-    private LocalDateTime dataAplicacao;
+    private LocalDate dataAplicacao;
     private String loteVacina;
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAtualizacao;

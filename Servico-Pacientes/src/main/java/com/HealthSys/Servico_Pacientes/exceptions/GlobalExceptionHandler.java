@@ -1,7 +1,9 @@
 package com.HealthSys.Servico_Pacientes.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -31,5 +33,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ListaAtendimentosPacienteVaziaException.class)
     public ResponseEntity<Object> handleListaAtendimentosPacienteVaziaException (ListaAtendimentosPacienteVaziaException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException (DataIntegrityViolationException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValidException (MethodArgumentNotValidException ex) {
+
+        String mensagem = ex.getBindingResult().getFieldError().getDefaultMessage();
+
+        return buildResponse(HttpStatus.BAD_REQUEST, mensagem);
     }
 }

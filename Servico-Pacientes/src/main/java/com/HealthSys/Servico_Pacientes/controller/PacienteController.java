@@ -11,9 +11,13 @@ import com.HealthSys.Servico_Pacientes.mappers.VacinaMapper;
 import com.HealthSys.Servico_Pacientes.model.Atendimento;
 import com.HealthSys.Servico_Pacientes.model.Paciente;
 import com.HealthSys.Servico_Pacientes.model.Vacina;
+import com.HealthSys.Servico_Pacientes.service.AtendimentoService;
 import com.HealthSys.Servico_Pacientes.service.PacienteService;
+import com.HealthSys.Servico_Pacientes.service.VacinaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +30,11 @@ public class PacienteController {
 
     private final PacienteService pacienteService;
     private final PacienteMapper pacienteMapper;
+
+    private final VacinaService vacinaService;
     private final VacinaMapper vacinaMapper;
+
+    private final AtendimentoService atendimentoService;
     private final AtendimentoMapper atendimentoMapper;
 
     @PostMapping
@@ -43,10 +51,11 @@ public class PacienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PacienteResponseDTO>> listarPacientes () {
-        List<Paciente> pacientesBuscados = pacienteService.buscarTodosPacientesCadastrados();
+    public ResponseEntity<Page<PacienteResponseDTO>> listarPacientes (@RequestParam(defaultValue = "0") int page,
+                                                                      @RequestParam(defaultValue = "10") int quantidadeElementos) {
+        Page<Paciente> pacientesBuscados = pacienteService.buscarTodosPacientesCadastrados(PageRequest.of(page, quantidadeElementos));
 
-        return ResponseEntity.ok(pacientesBuscados.stream().map(pacienteMapper::toDTO).toList());
+        return ResponseEntity.ok(pacientesBuscados.map(pacienteMapper::toDTO));
     }
 
     @PutMapping("/{id}")
@@ -65,14 +74,16 @@ public class PacienteController {
 
     @PostMapping("/{id}/vacinas")
     public ResponseEntity<VacinaResponseDTO> salvarVacinaPaciente (@PathVariable Long id, @Valid @RequestBody VacinaRequestDTO dto) {
-        Vacina vacinaFoiVinculada = pacienteService.vincularVacinaPaciente(id, vacinaMapper.toModel(dto));
+        Vacina vacinaFoiVinculada = vacinaService.vincularVacinaPaciente(id, vacinaMapper.toModel(dto));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(vacinaMapper.toDTO(vacinaFoiVinculada));
     }
 
     @GetMapping("/{id}/atendimentos")
-    public ResponseEntity<List<AtendimentoResponseDTO>> listarAtendimentosPaciente (@PathVariable Long id) {
-        List<Atendimento> atendimentosDoPaciente = pacienteService.listarAtendimentosPaciente(id);
-        return ResponseEntity.ok(atendimentosDoPaciente.stream().map(atendimentoMapper::toDTO).toList());
+    public ResponseEntity<Page<AtendimentoResponseDTO>> listarAtendimentosPaciente (@PathVariable Long id,
+                                                                                    @RequestParam(defaultValue = "0") int page,
+                                                                                    @RequestParam(defaultValue = "10") int quantidadeElementos) {
+        Page<Atendimento> atendimentosDoPaciente = atendimentoService.listarAtendimentosPaciente(id, PageRequest.of(page, quantidadeElementos));
+        return ResponseEntity.ok(atendimentosDoPaciente.map(atendimentoMapper::toDTO));
     }
 }

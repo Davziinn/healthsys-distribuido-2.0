@@ -2,21 +2,30 @@ package com.HealthSys.Servico_Pacientes.mappers;
 
 import com.HealthSys.Servico_Pacientes.dtos.vacina.VacinaRequestDTO;
 import com.HealthSys.Servico_Pacientes.dtos.vacina.VacinaResponseDTO;
+import com.HealthSys.Servico_Pacientes.entity.PacienteEntity;
 import com.HealthSys.Servico_Pacientes.entity.VacinaEntity;
+import com.HealthSys.Servico_Pacientes.model.Paciente;
 import com.HealthSys.Servico_Pacientes.model.Vacina;
 import org.springframework.stereotype.Component;
 
 @Component
 public class VacinaMapperImpl implements VacinaMapper {
 
-    private final PacienteMapper pacienteMapper;
-
-    public VacinaMapperImpl(PacienteMapper pacienteMapper) {
-        this.pacienteMapper = pacienteMapper;
-    }
-
     @Override
     public Vacina toModel(VacinaEntity entity) {
+
+        Paciente pacienteModel = Paciente.builder()
+                .id(entity.getPaciente().getId())
+                .idUsuario(entity.getPaciente().getIdUsuario())
+                .nomePaciente(entity.getPaciente().getNomePaciente())
+                .cpfPaciente(entity.getPaciente().getCpfPaciente())
+                .dataNascimento(entity.getPaciente().getDataNascimento())
+                .sexo(entity.getPaciente().getSexo())
+                .telefone(entity.getPaciente().getTelefone())
+                .dataCadastro(entity.getPaciente().getDataCadastro())
+                .dataAtualizacao(entity.getPaciente().getDataAtualizacao())
+                .build();
+
         return Vacina.builder()
                 .id(entity.getId())
                 .nomeVacina(entity.getNomeVacina())
@@ -24,14 +33,25 @@ public class VacinaMapperImpl implements VacinaMapper {
                 .loteVacina(entity.getLoteVacina())
                 .dataCadastro(entity.getDataCadastro())
                 .dataAtualizacao(entity.getDataAtualizacao())
-                .paciente(
-                        entity.getPaciente() != null ? pacienteMapper.toModel(entity.getPaciente()) : null
-                )
+                .paciente(pacienteModel)
                 .build();
     }
 
     @Override
     public VacinaEntity toEntity(Vacina model) {
+
+        PacienteEntity pacienteEntity = PacienteEntity.builder()
+                .id(model.getPaciente().getId())
+                .idUsuario(model.getPaciente().getIdUsuario())
+                .nomePaciente(model.getPaciente().getNomePaciente())
+                .cpfPaciente(model.getPaciente().getCpfPaciente())
+                .dataNascimento(model.getPaciente().getDataNascimento())
+                .sexo(model.getPaciente().getSexo())
+                .telefone(model.getPaciente().getTelefone())
+                .dataCadastro(model.getPaciente().getDataCadastro())
+                .dataAtualizacao(model.getPaciente().getDataAtualizacao())
+                .build();
+
         return VacinaEntity.builder()
                 .id(model.getId())
                 .nomeVacina(model.getNomeVacina())
@@ -39,9 +59,7 @@ public class VacinaMapperImpl implements VacinaMapper {
                 .loteVacina(model.getLoteVacina())
                 .dataCadastro(model.getDataCadastro())
                 .dataAtualizacao(model.getDataAtualizacao())
-                .paciente(
-                        model.getPaciente() != null ? pacienteMapper.toEntity(model.getPaciente()) : null
-                )
+                .paciente(pacienteEntity)
                 .build();
     }
 

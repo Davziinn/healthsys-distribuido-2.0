@@ -25,7 +25,7 @@ public class AtendimentoEntity {
     @Column(name = "TP_ATND", nullable = false)
     private String tipoAtendimento;
 
-    @Column(name = "DT_ATND", nullable = false, updatable = false)
+    @Column(name = "DT_ATND", nullable = false)
     private LocalDateTime dataAtendimento;
 
     @Column(name = "OBS_ATND")
@@ -43,7 +43,7 @@ public class AtendimentoEntity {
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PAC")
     private PacienteEntity paciente;
 }

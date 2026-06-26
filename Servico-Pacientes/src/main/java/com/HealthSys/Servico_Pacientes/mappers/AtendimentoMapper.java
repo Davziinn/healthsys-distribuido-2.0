@@ -1,5 +1,6 @@
 package com.HealthSys.Servico_Pacientes.mappers;
 
+import com.HealthSys.Servico_Pacientes.dtos.atendimento.AtendimentoRequestDTO;
 import com.HealthSys.Servico_Pacientes.dtos.atendimento.AtendimentoResponseDTO;
 import com.HealthSys.Servico_Pacientes.entity.AtendimentoEntity;
 import com.HealthSys.Servico_Pacientes.model.Atendimento;
@@ -11,5 +12,7 @@ public interface AtendimentoMapper {
     AtendimentoEntity toEntity (Atendimento model);
 
     AtendimentoResponseDTO toDTO (Atendimento model);
+
+    Atendimento toModel (AtendimentoRequestDTO dto);
 
 }

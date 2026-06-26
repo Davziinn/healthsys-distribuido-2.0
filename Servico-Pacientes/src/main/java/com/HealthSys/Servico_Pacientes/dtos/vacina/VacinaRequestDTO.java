@@ -1,10 +1,10 @@
 package com.HealthSys.Servico_Pacientes.dtos.vacina;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record VacinaRequestDTO(
         String nomeVacina,
-        LocalDateTime dataAplicacao,
+        LocalDate dataAplicacao,
         String loteVacina
 ) {
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,7 +26,7 @@ public class VacinaEntity {
     private String nomeVacina;
 
     @Column(name = "DT_APL_VAC", nullable = false)
-    private LocalDateTime dataAplicacao;
+    private LocalDate dataAplicacao;
 
     @Column(name = "LT_VAC", nullable = false)
     private String loteVacina;

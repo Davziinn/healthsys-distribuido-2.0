@@ -1,21 +1,17 @@
 package com.HealthSys.Servico_Pacientes.service;
 
-import com.HealthSys.Servico_Pacientes.exceptions.ListaAtendimentosPacienteVaziaException;
 import com.HealthSys.Servico_Pacientes.exceptions.PacienteNotFoundException;
-import com.HealthSys.Servico_Pacientes.mappers.AtendimentoMapper;
 import com.HealthSys.Servico_Pacientes.mappers.PacienteMapper;
-import com.HealthSys.Servico_Pacientes.mappers.VacinaMapper;
-import com.HealthSys.Servico_Pacientes.model.Atendimento;
 import com.HealthSys.Servico_Pacientes.model.Paciente;
 import com.HealthSys.Servico_Pacientes.model.Vacina;
-import com.HealthSys.Servico_Pacientes.repository.AtendimentoRepository;
 import com.HealthSys.Servico_Pacientes.repository.PacienteRepository;
-import com.HealthSys.Servico_Pacientes.repository.VacinaRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,12 +20,7 @@ public class PacienteService {
     private final PacienteRepository pacienteRepository;
     private final PacienteMapper pacienteMapper;
 
-    private final VacinaRepository vacinaRepository;
-    private final VacinaMapper vacinaMapper;
-
-    private final AtendimentoRepository atendimentoRepository;
-    private final AtendimentoMapper atendimentoMapper;
-
+    @Transactional
     public Paciente salvarPaciente(Paciente paciente) {
         /*pacienteRepository.findByIdUsuario(paciente.getIdUsuario());
         * Comentado para lembrar de quando for fazer a comunicação entre os serviços,
@@ -53,10 +44,11 @@ public class PacienteService {
         ));
     }
 
-    public List<Paciente> buscarTodosPacientesCadastrados() {
-        return pacienteRepository.findAll().stream().map(pacienteMapper::toModel).toList();
+    public Page<Paciente> buscarTodosPacientesCadastrados(Pageable pageable) {
+        return pacienteRepository.findAll(pageable).map(pacienteMapper::toModel);
     }
 
+    @Transactional
     public Paciente editarPaciente(Long id, Paciente novoPaciente) {
         Paciente pacienteEncontrado = buscarPacienteById(id);
 
@@ -75,23 +67,5 @@ public class PacienteService {
     public void deletarPacienteById(Long id) {
         buscarPacienteById(id);
         pacienteRepository.deleteById(id);
-    }
-
-    public Vacina vincularVacinaPaciente(Long id, Vacina vacina) {
-        Paciente pacienteBuscado = buscarPacienteById(id);
-
-        vacina.setPaciente(pacienteBuscado);
-
-        return vacinaMapper.toModel(vacinaRepository.save(vacinaMapper.toEntity(vacina)));
-    }
-
-    public List<Atendimento> listarAtendimentosPaciente(Long id) {
-        List<Atendimento> atendimentosBuscados = atendimentoRepository.findAllByPacienteId(id).stream().map(atendimentoMapper::toModel).toList();
-
-        if (atendimentosBuscados.isEmpty()) {
-            throw new ListaAtendimentosPacienteVaziaException("Nenhum atendimento foi encontrado para esse paciente");
-        }
-
-        return atendimentosBuscados;
     }
 }
