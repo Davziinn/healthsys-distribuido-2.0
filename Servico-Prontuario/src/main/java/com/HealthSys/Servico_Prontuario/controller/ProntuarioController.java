@@ -1,6 +1,7 @@
 package com.HealthSys.Servico_Prontuario.controller;
 
 import com.HealthSys.Servico_Prontuario.dto.consulta.ConsultaRequestDTO;
+import com.HealthSys.Servico_Prontuario.dto.prontuario.ProntuarioDetalhadoResponseDTO;
 import com.HealthSys.Servico_Prontuario.dto.prontuario.ProntuarioRequestDTO;
 import com.HealthSys.Servico_Prontuario.dto.prontuario.ProntuarioResponseDTO;
 import com.HealthSys.Servico_Prontuario.mappers.ConsultaMapper;
@@ -31,8 +32,8 @@ public class ProntuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProntuarioResponseDTO> buscarId(@PathVariable String id) {
-        return ResponseEntity.ok(prontuarioMapper.toDTO(prontuarioService.buscarById(id)));
+    public ResponseEntity<ProntuarioDetalhadoResponseDTO> buscarId(@PathVariable String id) {
+        return ResponseEntity.ok(prontuarioMapper.toDetalhadoDTO(prontuarioService.buscarById(id)));
     }
 
     @GetMapping("/{idPaciente}/paciente")

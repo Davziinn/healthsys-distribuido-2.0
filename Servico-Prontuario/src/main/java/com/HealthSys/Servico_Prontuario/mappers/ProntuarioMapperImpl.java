@@ -1,6 +1,7 @@
 package com.HealthSys.Servico_Prontuario.mappers;
 
 import com.HealthSys.Servico_Prontuario.document.ProntuarioDocument;
+import com.HealthSys.Servico_Prontuario.dto.prontuario.ProntuarioDetalhadoResponseDTO;
 import com.HealthSys.Servico_Prontuario.dto.prontuario.ProntuarioRequestDTO;
 import com.HealthSys.Servico_Prontuario.dto.prontuario.ProntuarioResponseDTO;
 import com.HealthSys.Servico_Prontuario.models.Prontuario;
@@ -50,7 +51,18 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
                 model.getId(),
                 model.getIdPaciente(),
                 model.getDataCriacao(),
-                1
+                model.getConsultas().size()
+        );
+    }
+
+    @Override
+    public ProntuarioDetalhadoResponseDTO toDetalhadoDTO(Prontuario model) {
+        return new ProntuarioDetalhadoResponseDTO(
+                model.getId(),
+                model.getIdPaciente(),
+                model.getDataCriacao(),
+                model.getDataAtualizacao(),
+                model.getConsultas() != null ? model.getConsultas().stream().map(consultaMapper::toDTO).toList() : null
         );
     }
 }

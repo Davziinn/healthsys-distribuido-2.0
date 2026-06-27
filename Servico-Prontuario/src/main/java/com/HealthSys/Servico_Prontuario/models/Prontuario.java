@@ -17,5 +17,6 @@ public class Prontuario {
     private Long idPaciente;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;
+    private Long totalConsultas;
     private List<Consulta> consultas = new ArrayList<>();
 }

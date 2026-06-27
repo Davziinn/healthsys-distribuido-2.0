@@ -2,6 +2,7 @@ package com.HealthSys.Servico_Prontuario.mappers;
 
 import com.HealthSys.Servico_Prontuario.document.subdocuments.ConsultasSubDocument;
 import com.HealthSys.Servico_Prontuario.dto.consulta.ConsultaRequestDTO;
+import com.HealthSys.Servico_Prontuario.dto.consulta.ConsultaResponseDTO;
 import com.HealthSys.Servico_Prontuario.models.Consulta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -51,5 +52,18 @@ public class ConsultaMapperImpl implements ConsultaMapper {
                 .exames(dto.exames() != null ? dto.exames().stream().map(exameMapper::toModel).toList() : List.of())
                 .medicamentos(dto.medicamentos() != null ? dto.medicamentos().stream().map(medicamentoMapper::toModel).toList() : List.of())
                 .build();
+    }
+
+    @Override
+    public ConsultaResponseDTO toDTO(Consulta model) {
+        return new ConsultaResponseDTO(
+                model.getIdConsulta(),
+                model.getDataConsulta(),
+                model.getNomeMedico(),
+                model.getDiagnostico(),
+                model.getObservacoes(),
+                model.getExames() != null ? model.getExames().stream().map(exameMapper::toDTO).toList() : null,
+                model.getMedicamentos() != null ? model.getMedicamentos().stream().map(medicamentoMapper::toDTO).toList() : null
+        );
     }
 }

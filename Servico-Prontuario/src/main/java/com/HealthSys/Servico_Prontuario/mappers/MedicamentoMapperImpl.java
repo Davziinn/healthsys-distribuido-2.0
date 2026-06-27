@@ -2,6 +2,7 @@ package com.HealthSys.Servico_Prontuario.mappers;
 
 import com.HealthSys.Servico_Prontuario.document.subdocuments.MedicamentosSubDocument;
 import com.HealthSys.Servico_Prontuario.dto.medicamento.MedicamentoRequestDTO;
+import com.HealthSys.Servico_Prontuario.dto.medicamento.MedicamentoResponseDTO;
 import com.HealthSys.Servico_Prontuario.models.Medicamentos;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +34,14 @@ public class MedicamentoMapperImpl implements MedicamentoMapper {
                 .dosagem(dto.dosagem())
                 .frequencia(dto.frequencia())
                 .build();
+    }
+
+    @Override
+    public MedicamentoResponseDTO toDTO(Medicamentos model) {
+        return new MedicamentoResponseDTO(
+                model.getNomeMedicamento(),
+                model.getDosagem(),
+                model.getFrequencia()
+        );
     }
 }

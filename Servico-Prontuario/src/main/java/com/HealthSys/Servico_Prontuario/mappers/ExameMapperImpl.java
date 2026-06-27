@@ -2,6 +2,7 @@ package com.HealthSys.Servico_Prontuario.mappers;
 
 import com.HealthSys.Servico_Prontuario.document.subdocuments.ExamesSubDocument;
 import com.HealthSys.Servico_Prontuario.dto.exame.ExameRequestDTO;
+import com.HealthSys.Servico_Prontuario.dto.exame.ExameResponseDTO;
 import com.HealthSys.Servico_Prontuario.models.Exames;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +34,14 @@ public class ExameMapperImpl implements ExameMapper {
                 .resultadoExame(dto.resultadoExame())
                 .arquivo(dto.caminhoArquivo())
                 .build();
+    }
+
+    @Override
+    public ExameResponseDTO toDTO(Exames model) {
+        return new ExameResponseDTO(
+                model.getTipoExame(),
+                model.getResultadoExame(),
+                model.getArquivo()
+        );
     }
 }

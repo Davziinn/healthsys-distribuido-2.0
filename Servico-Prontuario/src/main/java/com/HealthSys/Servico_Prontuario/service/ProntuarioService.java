@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +29,11 @@ public class ProntuarioService {
         if (isPacienteExistente) {
             throw new PacienteJaExisteException("Paciente já possui prontuário");
         }
+
+        novoProntuario = novoProntuario.toBuilder()
+                .dataCriacao(LocalDateTime.now())
+                .totalConsultas(0L)
+                .build();
 
         return prontuarioMapper.toModel(prontuarioRepository.save(prontuarioMapper.toDocument(novoProntuario)));
     }
@@ -65,5 +71,9 @@ public class ProntuarioService {
                 .build();
 
         return prontuarioMapper.toModel(prontuarioRepository.save(prontuarioMapper.toDocument(prontuarioEncontrado)));
+    }
+
+    public Long contarConsultasByPaciente (Long idPaciente) {
+        return prontuarioRepository.countConsultasByPacienteId(idPaciente);
     }
 }
