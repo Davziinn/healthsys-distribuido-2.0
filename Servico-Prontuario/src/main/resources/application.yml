@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Servico-Prontuario
+
+  mongodb:
+    host: localhost
+    port: 27018
+    database: db_prontuarios-healthsys
+#      username: adm
+#      password: adm
+#      authentication-database: admin
