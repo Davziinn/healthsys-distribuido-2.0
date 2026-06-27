@@ -11,13 +11,4 @@ public interface ProntuarioRepository extends MongoRepository<ProntuarioDocument
     boolean existsByIdPaciente (Long idPaciente);
 
     List<ProntuarioDocument> findByIdPaciente (Long id);
-
-    @Aggregation(pipeline = {
-            "{ '$match': { 'pacienteId': ?0 } }",
-            "{ '$group': { '_id': null, 'total': { '$sum': { '$size': { '$ifNull': [ '$consultas', [] ] } } } } }",
-            "{ '$project': { '_id': 0, 'value': '$total' } }"
-    })
-    Long countConsultasByPacienteId(Long pacienteId);
-
-
 }

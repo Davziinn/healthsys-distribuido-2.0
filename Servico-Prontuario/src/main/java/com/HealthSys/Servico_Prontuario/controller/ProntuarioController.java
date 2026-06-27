@@ -42,7 +42,7 @@ public class ProntuarioController {
     }
 
     @PostMapping("/{id}/consultas")
-    public ResponseEntity<ProntuarioResponseDTO> cadastrarConsultaProntuario (@PathVariable String id, @RequestBody ConsultaRequestDTO dto){
+    public ResponseEntity<ProntuarioResponseDTO> cadastrarConsultaProntuario (@Valid @PathVariable String id, @RequestBody ConsultaRequestDTO dto){
         Prontuario atualizado = prontuarioService.adicionarConsulta(
                 id, consultaMapper.toConsultaModel(dto)
         );

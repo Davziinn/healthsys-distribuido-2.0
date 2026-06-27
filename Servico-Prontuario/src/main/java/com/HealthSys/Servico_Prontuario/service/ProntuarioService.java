@@ -72,8 +72,4 @@ public class ProntuarioService {
 
         return prontuarioMapper.toModel(prontuarioRepository.save(prontuarioMapper.toDocument(prontuarioEncontrado)));
     }
-
-    public Long contarConsultasByPaciente (Long idPaciente) {
-        return prontuarioRepository.countConsultasByPacienteId(idPaciente);
-    }
 }
