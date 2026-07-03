@@ -7,6 +7,7 @@ import com.HealthSys.Servico_Usuarios.models.Usuario;
 import com.HealthSys.Servico_Usuarios.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +65,12 @@ public class UsuarioService {
         }
 
         usuarioRepository.deleteById(id);
+    }
+
+    public Usuario buscarUsuarioByEmail (String email) {
+        return usuarioMapper.toModel(usuarioRepository.findByEmailUsuario(email).orElseThrow(
+                () -> new UsernameNotFoundException("Usuário não encontrado")
+        ));
     }
 
     public boolean verificaExistenciaUsuarioById (Long id) {

@@ -28,7 +28,7 @@ public class UsuarioEntity {
     @Column(name = "EML_USU", length = 150, nullable = false, unique = true)
     private String emailUsuario;
 
-    @Column(name = "SNH_USU", length = 50, nullable = false)
+    @Column(name = "SNH_USU", nullable = false)
     private String senha;
 
     @Enumerated(EnumType.STRING)
