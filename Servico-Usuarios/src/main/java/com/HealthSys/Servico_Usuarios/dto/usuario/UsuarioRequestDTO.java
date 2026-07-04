@@ -17,6 +17,5 @@ public record UsuarioRequestDTO (
         @Size(min = 8, message = "O campo SENHA deve conter no MÍNIMO 8 caracteres")
         String senha,
 
-        @NotBlank(message = "O campo ROLE é obrigatório")
         RoleUsuario role
 ) {}

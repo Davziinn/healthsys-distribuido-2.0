@@ -1,6 +1,7 @@
 package com.HealthSys.Servico_Usuarios.config.security;
 
 import com.HealthSys.Servico_Usuarios.entity.UsuarioEntity;
+import com.HealthSys.Servico_Usuarios.enums.RoleUsuario;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,10 @@ public class UsuarioDetailsImpl implements UserDetails {
 
     public UsuarioDetailsImpl(UsuarioEntity usuario) {
         this.usuario = usuario;
+    }
+
+    public RoleUsuario getRoleUsuario() {
+        return usuario.getRoleUsuario();
     }
 
     @Override

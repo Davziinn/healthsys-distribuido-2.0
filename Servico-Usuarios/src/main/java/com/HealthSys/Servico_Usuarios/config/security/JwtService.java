@@ -15,14 +15,13 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
 
     private final RsaKeyProvider rsaKeyProvider;
 
-    @Value("{jwt.expiration-minutes}")
+    @Value("${jwt.expiration-minutes}")
     private long expirationMinutes;
 
     public JwtService(RsaKeyProvider rsaKeyProvider) {
@@ -45,7 +44,7 @@ public class JwtService {
                 .claim("role", roles)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(expiration))
-                .signWith(privateKey, Jwts.SIG.ES256)
+                .signWith(privateKey, Jwts.SIG.RS256)
                 .compact();
     }
 

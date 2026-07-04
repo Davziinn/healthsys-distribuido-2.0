@@ -21,10 +21,11 @@ public class RsaKeyProvider {
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
 
-    public RsaKeyProvider(PrivateKey privateKey, PublicKey publicKey) {
-        this.privateKey = privateKey;
-        this.publicKey = publicKey;
+    public RsaKeyProvider() throws Exception {
+        this.privateKey = loadPrivateKey("keys/private_key.pem");
+        this.publicKey = loadPublicKey("keys/public_key.pem");
     }
+
 
     private PrivateKey loadPrivateKey(String path) throws Exception {
         String key = readKeyFile(path)
