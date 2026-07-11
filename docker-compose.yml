@@ -1,8 +1,85 @@
-version: "3.9"
-
 services:
 
-  postgres:
+  postgres-usuarios:
     image: postgres:16
-    container_name: healthSys-postgresql
+    container_name: healthSys-servico-usuarios
     environment:
+      POSTGRES_DB: db_usuario-healthsys
+      POSTGRES_USER: adm
+      POSTGRES_PASSWORD: adm
+    ports:
+      - "5433:5432"
+    volumes:
+      - healthSys_usu_data:/var/lib/postgresql/data
+    networks:
+      - healthsys-net
+
+  postgres-pacientes:
+    image: postgres:16
+    container_name: healthSys-servico-pacientes
+    environment:
+      POSTGRES_DB: db_pacientes-healthsys
+      POSTGRES_USER: adm
+      POSTGRES_PASSWORD: adm
+    ports:
+      - "5432:5432"
+    volumes:
+      - healthSys_pac_data:/var/lib/postgresql/data
+    networks:
+      - healthsys-net
+
+  mongodb:
+    image: mongo:latest
+    container_name: healthSys-servico-prontuario
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - healthsys-net
+
+  servico-usuarios:
+    build: ./Servico-Usuarios
+    container_name: servico-usuarios
+    environment:
+      DB_HOST: postgres-usuarios
+    depends_on:
+      - postgres-usuarios
+    ports:
+      - "8081:8080"
+    networks:
+      - healthsys-net
+
+  servico-pacientes:
+    build: ./Servico-Pacientes
+    container_name: servico-pacientes
+    environment:
+      DB_HOST: postgres-pacientes
+    depends_on:
+      - postgres-pacientes
+    ports:
+      - "8082:8080"
+    networks:
+      - healthsys-net
+
+  servico-prontuario:
+    build: ./Servico-Prontuario
+    container_name: servico-prontuario
+    environment:
+      DB_HOST: mongodb
+      DB_PORT: 27017
+    depends_on:
+      - mongodb
+    ports:
+      - "8083:8080"
+    networks:
+      - healthsys-net
+
+volumes:
+  healthSys_usu_data:
+  healthSys_pac_data:
+  mongo_data:
+
+networks:
+  healthsys-net:
+    driver: bridge
