@@ -32,4 +32,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleProntuarioNotFoundException (ProntuarioNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+
+    @ExceptionHandler(PacienteNaoEncontradoException.class)
+    public ResponseEntity<Object> handlePacienteNaoEncontradoException (PacienteNaoEncontradoException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(PacienteServiceIndisponivelException.class)
+    public ResponseEntity<Object> handlePacienteServiceIndisponivelException (PacienteServiceIndisponivelException ex) {
+        return buildResponse(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+    }
 }

@@ -8,6 +8,7 @@ import com.HealthSys.Servico_Prontuario.mappers.ConsultaMapper;
 import com.HealthSys.Servico_Prontuario.mappers.ProntuarioMapper;
 import com.HealthSys.Servico_Prontuario.models.Prontuario;
 import com.HealthSys.Servico_Prontuario.service.ProntuarioService;
+import com.HealthSys.Servico_Prontuario.webClient.client.PacienteClient;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

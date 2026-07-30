@@ -1,11 +1,13 @@
 package com.HealthSys.Servico_Prontuario.service;
 
 import com.HealthSys.Servico_Prontuario.exceptions.PacienteJaExisteException;
+import com.HealthSys.Servico_Prontuario.exceptions.PacienteNaoEncontradoException;
 import com.HealthSys.Servico_Prontuario.exceptions.ProntuarioNotFoundException;
 import com.HealthSys.Servico_Prontuario.mappers.ProntuarioMapper;
 import com.HealthSys.Servico_Prontuario.models.Consulta;
 import com.HealthSys.Servico_Prontuario.models.Prontuario;
 import com.HealthSys.Servico_Prontuario.repository.ProntuarioRepository;
+import com.HealthSys.Servico_Prontuario.webClient.client.PacienteClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +23,15 @@ public class ProntuarioService {
 
     private final ProntuarioMapper prontuarioMapper;
     private final ProntuarioRepository prontuarioRepository;
+    private final PacienteClient pacienteClient;
 
     @Transactional
     public Prontuario salvarProntuario(Prontuario novoProntuario) {
+
+        if(!pacienteClient.pacienteExiste(novoProntuario.getIdPaciente())) {
+            throw new PacienteNaoEncontradoException("Paciente com ID " + novoProntuario.getIdPaciente() + " não existe");
+        }
+
         boolean isPacienteExistente = prontuarioRepository.existsByIdPaciente(novoProntuario.getIdPaciente());
 
         if (isPacienteExistente) {
