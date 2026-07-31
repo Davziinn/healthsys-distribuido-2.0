@@ -1,9 +1,12 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: Servico-Usuarios
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:5432/db_usuario-healthsys
+    url: jdbc:postgresql://${DB_HOST:localhost}:5433/db_usuario-healthsys
     username: adm
     password: adm
     driver-class-name: org.postgresql.Driver

@@ -1,10 +1,12 @@
 package com.HealthSys.Servico_Pacientes.service;
 
 import com.HealthSys.Servico_Pacientes.exceptions.PacienteNotFoundException;
+import com.HealthSys.Servico_Pacientes.exceptions.UsuarioNaoEncontradoException;
 import com.HealthSys.Servico_Pacientes.mappers.PacienteMapper;
 import com.HealthSys.Servico_Pacientes.model.Paciente;
 import com.HealthSys.Servico_Pacientes.model.Vacina;
 import com.HealthSys.Servico_Pacientes.repository.PacienteRepository;
+import com.HealthSys.Servico_Pacientes.webClient.client.UsuarioClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,15 +21,15 @@ public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
     private final PacienteMapper pacienteMapper;
+    private final UsuarioClient usuarioClient;
 
     @Transactional
     public Paciente salvarPaciente(Paciente paciente) {
-        /*pacienteRepository.findByIdUsuario(paciente.getIdUsuario());
-        * Comentado para lembrar de quando for fazer a comunicação entre os serviços,
-        *   deve buscar o idUsuario pelo endpoint exposto pelo serviço de usuários
-        *   depois vincular ao paciente na coluna idUsuario
-        *   depois salvar o paciente
-        */
+
+        if (!usuarioClient.existeUsario(paciente.getIdUsuario())) {
+            throw new UsuarioNaoEncontradoException("Usuario com id " + paciente.getIdUsuario() + " não existe");
+        }
+
 
         /*validarCPF(paciente.getCpfPaciente());
         * Comentado para lembrar de validar se é um CPF válido

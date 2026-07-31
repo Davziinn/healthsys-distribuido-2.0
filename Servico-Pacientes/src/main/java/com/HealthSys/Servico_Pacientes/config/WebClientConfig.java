@@ -1,4 +1,4 @@
-package com.HealthSys.Servico_Prontuario.config;
+package com.HealthSys.Servico_Pacientes.config;
 
 import io.netty.channel.ChannelOption;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,17 +11,16 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 
 @Configuration
-public class WebClienteConfig {
+public class WebClientConfig {
 
     @Bean
-    public WebClient pacientesWebCliente (@Value("${services.pacientes.url}") String baseUrlServicoPacientes) {
-
+    public WebClient usuarioWebClient (@Value("${services.usuarios.url}") String urlBaseServiceUsuario) {
         HttpClient httpClient = HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
                 .responseTimeout(Duration.ofSeconds(3));
 
         return WebClient.builder()
-                .baseUrl(baseUrlServicoPacientes)
+                .baseUrl(urlBaseServiceUsuario)
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
     }

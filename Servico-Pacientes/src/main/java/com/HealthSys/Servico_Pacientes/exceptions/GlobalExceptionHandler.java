@@ -40,6 +40,16 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(UsuarioServiceIndisponivelException .class)
+    public ResponseEntity<Object> handleUsuarioServiceIndisponivelException  (UsuarioServiceIndisponivelException  ex) {
+        return buildResponse(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+    }
+
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    public ResponseEntity<Object> handleUsuarioNaoEncontradoException (UsuarioNaoEncontradoException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValidException (MethodArgumentNotValidException ex) {
 

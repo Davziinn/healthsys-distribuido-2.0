@@ -23,7 +23,6 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final UsuarioMapper usuarioMapper;
 
-    @PreAuthorize("hasRole('ADM')")
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario (@Valid @RequestBody UsuarioRequestDTO dto) {
         Usuario usuarioCadastrado = usuarioService.salvarUsuario(usuarioMapper.toModel(dto));
