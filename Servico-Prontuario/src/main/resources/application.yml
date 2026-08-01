@@ -5,13 +5,20 @@ spring:
   application:
     name: Servico-Prontuario
 
-  mongodb:
-    host: ${DB_HOST:localhost}
-    port: ${DB_PORT:27018}
-    database: db_prontuarios-healthsys
-#      username: adm
-#      password: adm
-#      authentication-database: admin
+  data:
+    mongodb:
+      host: ${DB_HOST:localhost}
+      port: ${DB_PORT:27018}
+      database: db_prontuarios-healthsys
+  #      username: adm
+  #      password: adm
+  #      authentication-database: admin
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: 5672
+    username: adm
+    password: adm
 
 services:
   pacientes:

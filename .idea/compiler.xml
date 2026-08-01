@@ -3,15 +3,16 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for Servico-Pacientes" enabled="true">
+      <profile name="Annotation profile for Servico_Notificacoes" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="Servico-Pacientes" />
+        <module name="Servico_Notificacoes" />
         <module name="Servico-Prontuario" />
+        <module name="Servico-Pacientes" />
         <module name="Servico-Usuarios" />
       </profile>
     </annotationProcessing>
@@ -24,6 +25,7 @@
       <module name="Servico-Pacientes" options="-parameters" />
       <module name="Servico-Prontuario" options="-parameters" />
       <module name="Servico-Usuarios" options="-parameters" />
+      <module name="Servico_Notificacoes" options="-parameters" />
       <module name="Sevico-Usuarios" options="-parameters" />
     </option>
   </component>

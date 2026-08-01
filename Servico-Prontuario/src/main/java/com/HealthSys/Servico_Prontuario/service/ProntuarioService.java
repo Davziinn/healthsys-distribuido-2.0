@@ -4,6 +4,8 @@ import com.HealthSys.Servico_Prontuario.exceptions.PacienteJaExisteException;
 import com.HealthSys.Servico_Prontuario.exceptions.PacienteNaoEncontradoException;
 import com.HealthSys.Servico_Prontuario.exceptions.ProntuarioNotFoundException;
 import com.HealthSys.Servico_Prontuario.mappers.ProntuarioMapper;
+import com.HealthSys.Servico_Prontuario.messaging.event.ConsultaCriadaEvent;
+import com.HealthSys.Servico_Prontuario.messaging.publisher.NotificacaoPublisher;
 import com.HealthSys.Servico_Prontuario.models.Consulta;
 import com.HealthSys.Servico_Prontuario.models.Prontuario;
 import com.HealthSys.Servico_Prontuario.repository.ProntuarioRepository;
@@ -24,6 +26,8 @@ public class ProntuarioService {
     private final ProntuarioMapper prontuarioMapper;
     private final ProntuarioRepository prontuarioRepository;
     private final PacienteClient pacienteClient;
+
+    private final NotificacaoPublisher notificacaoPublisher;
 
     @Transactional
     public Prontuario salvarProntuario(Prontuario novoProntuario) {
@@ -78,6 +82,16 @@ public class ProntuarioService {
                 .consultas(consultas)
                 .build();
 
-        return prontuarioMapper.toModel(prontuarioRepository.save(prontuarioMapper.toDocument(prontuarioEncontrado)));
+        Prontuario prontuarioSalvo = prontuarioMapper.toModel(prontuarioRepository.save(prontuarioMapper.toDocument(prontuarioEncontrado)));
+
+        notificacaoPublisher.publicarConsultaCriada(new ConsultaCriadaEvent(
+                prontuarioSalvo.getId(),
+                prontuarioSalvo.getIdPaciente(),
+                consulta.getIdConsulta(),
+                consulta.getNomeMedico(),
+                consulta.getDataConsulta()
+        ));
+
+        return prontuarioSalvo;
     }
 }

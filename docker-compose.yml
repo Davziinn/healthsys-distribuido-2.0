@@ -96,6 +96,24 @@ services:
     networks:
       - healthsys-net
 
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: healthSys-rabbitmq
+    ports:
+      - "5672:5672"    # porta que sua aplicação Java vai usar pra conectar
+      - "15672:15672"  # porta da interface web de management
+    environment:
+      RABBITMQ_DEFAULT_USER: adm
+      RABBITMQ_DEFAULT_PASS: adm
+    networks:
+      - healthsys-net
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   healthSys_usu_data:
   healthSys_pac_data:
