@@ -7,15 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Component
 @Slf4j
 public class UsuarioClient {
 
     private final WebClient usuarioWebClient;
+    private UsuarioTokenProvider tokenProvider;
 
-    public UsuarioClient(@Qualifier("usuarioWebClient") WebClient usuarioWebClient) {
+    public UsuarioClient(@Qualifier("usuarioWebClient") WebClient usuarioWebClient,
+                         UsuarioTokenProvider tokenProvider) {
         this.usuarioWebClient = usuarioWebClient;
+        this.tokenProvider = tokenProvider;
     }
 
     @Retry(name = "usuarios-service")
@@ -25,14 +29,18 @@ public class UsuarioClient {
             usuarioWebClient
                     .get()
                     .uri("/v1/usuario/{id}", idUsuario)
+                    .headers(header -> header.setBearerAuth(tokenProvider.obterToken()))
                     .retrieve()
                     .toBodilessEntity()
                     .block();
 
             return true;
 
-        } catch (Exception e) {
+        } catch (WebClientResponseException.NotFound e) {
             return false;
+        } catch (WebClientResponseException.Unauthorized | WebClientResponseException.Forbidden  e) {
+            tokenProvider.invalidarToken();
+            throw e;
         }
     }
 

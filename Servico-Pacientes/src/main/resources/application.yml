@@ -24,6 +24,9 @@ spring:
 services:
   usuarios:
     url: http://${USUARIOS_HOST:localhost}:${USUARIOS_PORT:8081}
+    auth:
+      email: ${USUARIOS_AUTH_EMAIL:adm@adm.com}
+      senha: ${USUARIOS_AUTH_SENHA:123456789}
 
 resilience4j:
   circuitbreaker:

@@ -34,6 +34,7 @@ public class JwtService {
         List<String> roles = userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
+                .map(authority -> authority.replace("ROLE_", ""))
                 .toList();
 
         Instant now = Instant.now();
@@ -59,7 +60,7 @@ public class JwtService {
 
     @SuppressWarnings("unchecked")
     public List<String> extrairRoles (String token) {
-        return extrairTodasClaims(token).get("roles", List.class);
+        return extrairTodasClaims(token).get("role", List.class);
     }
 
     public String extrairUsername (String token) {
