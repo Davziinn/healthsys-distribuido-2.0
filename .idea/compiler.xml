@@ -10,9 +10,18 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="Servico_Notificacoes" />
         <module name="Servico-Prontuario" />
         <module name="Servico-Pacientes" />
+        <module name="Servico_Notificacoes" />
+      </profile>
+      <profile name="Annotation profile for Servico-Triagem" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="Servico-Triagem" />
         <module name="Servico-Usuarios" />
       </profile>
     </annotationProcessing>
@@ -24,6 +33,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Servico-Pacientes" options="-parameters" />
       <module name="Servico-Prontuario" options="-parameters" />
+      <module name="Servico-Triagem" options="-parameters" />
       <module name="Servico-Usuarios" options="-parameters" />
       <module name="Servico_Notificacoes" options="-parameters" />
       <module name="Sevico-Usuarios" options="-parameters" />
