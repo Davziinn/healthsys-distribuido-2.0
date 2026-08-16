@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Servico-Gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: usuarios-service
+              uri: http://${USUARIOS_HOST:localhost}:${USUARIOS_PORT:8081}
+              predicates:
+                - Path=/v1/usuario/**,/v1/auth/**
+
+            - id: pacientes-service
+              uri: http://${PACIENTES_HOST:localhost}:${PACIENTES_PORT:8082}
+              predicates:
+                - Path=/v1/pacientes/**,/v1/atendimento/**
+
+            - id: prontuario-service
+              uri: http://${PRONTUARIO_HOST:localhost}:${PRONTUARIO_PORT:8083}
+              predicates:
+                - Path=/v1/prontuario/**
+
+            - id: triagem-service
+              uri: http://${TRIAGEM_HOST:localhost}:${TRIAGEM_PORT:8085}
+              predicates:
+                - Path=/v1/triagem/**
+
+management:
+  endpoint:
+    gateway:
+      access: read-only
+  endpoints:
+    web:
+      exposure:
+        include: gateway

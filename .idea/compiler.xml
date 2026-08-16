@@ -24,6 +24,12 @@
         <module name="Servico-Triagem" />
         <module name="Servico-Usuarios" />
       </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Servico-Gateway" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Sevico-Usuarios" target="21" />
@@ -31,6 +37,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Servico-Gateway" options="-parameters" />
       <module name="Servico-Pacientes" options="-parameters" />
       <module name="Servico-Prontuario" options="-parameters" />
       <module name="Servico-Triagem" options="-parameters" />
