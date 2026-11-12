@@ -96,7 +96,6 @@ services:
     networks:
       - healthsys-net
 
-
   rabbitmq:
     image: rabbitmq:3-management
     container_name: healthSys-rabbitmq
@@ -144,6 +143,21 @@ services:
       - kafka
     networks:
       - healthsys-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: healthSys-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - healthsys-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
 
 volumes:
   healthSys_usu_data:
