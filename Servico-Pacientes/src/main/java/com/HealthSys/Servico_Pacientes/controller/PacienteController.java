@@ -45,7 +45,7 @@ public class PacienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PacienteResponseDTO> consultarDadosPacienteById (@PathVariable Long id) {
-        Paciente pacienteConsultado = pacienteService.buscarPacienteById(id);
+        Paciente pacienteConsultado = pacienteService.consultarPacienteByIdCache(id);
 
         return ResponseEntity.ok(pacienteMapper.toDTO(pacienteConsultado));
     }

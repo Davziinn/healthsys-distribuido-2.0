@@ -1,6 +1,6 @@
 package com.HealthSys.Servico_Pacientes.config;
 
-import com.HealthSys.Servico_Pacientes.dtos.paciente.PacienteResponseDTO;
+import com.HealthSys.Servico_Pacientes.model.Paciente;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -35,7 +35,7 @@ public class RedisCacheConfig {
                 .disableCachingNullValues()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
-                        new Jackson2JsonRedisSerializer<>(mapper, PacienteResponseDTO.class)));
+                        new Jackson2JsonRedisSerializer<>(mapper, Paciente.class)));
 
         return RedisCacheManager
                 .builder(connectionFactory)

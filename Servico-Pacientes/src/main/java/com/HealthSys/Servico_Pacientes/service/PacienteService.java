@@ -9,11 +9,13 @@ import com.HealthSys.Servico_Pacientes.repository.PacienteRepository;
 import com.HealthSys.Servico_Pacientes.webClient.client.UsuarioClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -69,5 +71,13 @@ public class PacienteService {
     public void deletarPacienteById(Long id) {
         buscarPacienteById(id);
         pacienteRepository.deleteById(id);
+    }
+
+    @Cacheable(value = "pacientes", key = "#id", sync = true)
+    public Paciente consultarPacienteByIdCache (Long id) {
+        return buscarPacienteById(id).toBuilder()
+                .atendimentos(List.of())
+                .vacinas(List.of())
+                .build();
     }
 }

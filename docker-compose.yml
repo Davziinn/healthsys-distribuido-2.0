@@ -28,7 +28,7 @@ services:
       POSTGRES_USER: adm
       POSTGRES_PASSWORD: adm
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - healthSys_pac_data:/var/lib/postgresql/data
     networks:
