@@ -4,11 +4,11 @@ import com.HealthSys.Servico_Pacientes.exceptions.PacienteNotFoundException;
 import com.HealthSys.Servico_Pacientes.exceptions.UsuarioNaoEncontradoException;
 import com.HealthSys.Servico_Pacientes.mappers.PacienteMapper;
 import com.HealthSys.Servico_Pacientes.model.Paciente;
-import com.HealthSys.Servico_Pacientes.model.Vacina;
 import com.HealthSys.Servico_Pacientes.repository.PacienteRepository;
 import com.HealthSys.Servico_Pacientes.webClient.client.UsuarioClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +52,7 @@ public class PacienteService {
         return pacienteRepository.findAll(pageable).map(pacienteMapper::toModel);
     }
 
+    @CacheEvict(value = "pacientes", key = "#id")
     @Transactional
     public Paciente editarPaciente(Long id, Paciente novoPaciente) {
         Paciente pacienteEncontrado = buscarPacienteById(id);
@@ -68,6 +69,7 @@ public class PacienteService {
         return pacienteMapper.toModel(pacienteRepository.save(pacienteMapper.toEntity(pacienteEncontrado)));
     }
 
+    @CacheEvict(value = "pacientes", key = "#id")
     public void deletarPacienteById(Long id) {
         buscarPacienteById(id);
         pacienteRepository.deleteById(id);

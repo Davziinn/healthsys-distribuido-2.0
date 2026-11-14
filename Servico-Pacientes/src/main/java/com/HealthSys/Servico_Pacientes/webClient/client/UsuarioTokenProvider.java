@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Component
 @Slf4j
@@ -36,7 +37,19 @@ public class UsuarioTokenProvider {
         tokenCache = null;
     }
 
-    private String login () {
+//    private String login () {
+//        LoginResponse loginResponse = usuarioWebClient.post()
+//                .uri("/v1/auth/login")
+//                .bodyValue(new LoginResquest(email, senha))
+//                .retrieve()
+//                .bodyToMono(LoginResponse.class)
+//                .block();
+//
+//        log.info("Novo token obtido do Servico-Usuario para chamadas internas");
+//        return loginResponse.token();
+//    }
+private String login() {
+    try {
         LoginResponse loginResponse = usuarioWebClient.post()
                 .uri("/v1/auth/login")
                 .bodyValue(new LoginResquest(email, senha))
@@ -44,9 +57,18 @@ public class UsuarioTokenProvider {
                 .bodyToMono(LoginResponse.class)
                 .block();
 
-        log.info("Novo token obtido do Servico-Usuario para chamadas internas");
         return loginResponse.token();
+
+    } catch (WebClientResponseException e) {
+        log.error(
+                "Erro ao autenticar no Servico-Usuarios: {}",
+                e.getResponseBodyAsString()
+        );
+
+        throw e;
     }
+}
+
 
     private record LoginResquest (String email, String senha) {}
     private record LoginResponse (String token, String role, String username) {}
